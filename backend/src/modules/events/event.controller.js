@@ -13,7 +13,6 @@ const { safeAsync } = require("../../utils/safeAsync");
 const { getPendingEvents } = require("./event.service");
 
 const aiClient = require("../../services/aiClient");
-const Event = require("./event.model");
 
 // =======================
 // GET EVENTS
