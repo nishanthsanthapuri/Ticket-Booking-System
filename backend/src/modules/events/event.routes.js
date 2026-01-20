@@ -8,6 +8,7 @@ const {
   aiSearchEvents,
   incrementEventViewHandler,
   getPendingEventsHandler,
+  aiSearchEventsProxy,
 } = require("./event.controller");
 
 const { requireRole } = require("../../middlewares/role.middleware");
@@ -35,6 +36,8 @@ router.post(
   }),
   aiSearchEvents
 );
+
+router.post("/ai-search", aiSearchEventsProxy);
 
 // View tracking
 router.post("/:eventId/view", incrementEventViewHandler);

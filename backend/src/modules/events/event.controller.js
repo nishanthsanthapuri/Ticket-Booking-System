@@ -12,6 +12,9 @@ const { safeAsync } = require("../../utils/safeAsync");
 
 const { getPendingEvents } = require("./event.service");
 
+const aiClient = require("../../services/aiClient");
+const Event = require("./event.model");
+
 // =======================
 // GET EVENTS
 // =======================
@@ -139,6 +142,50 @@ const incrementEventViewHandler = async (req, res) => {
   }
 };
 
+const aiSearchEventsProxy = async (req, res) => {
+  try {
+    const { query } = req.body;
+
+    if (!query) {
+      return res.status(400).json({ message: "query is required" });
+    }
+
+    // 1️⃣ Call AI service
+    const aiResponse = await aiClient.post("/search", { query });
+
+    const parsedFilters = aiResponse.data.parsed_filters || {};
+
+    // 2️⃣ Use AI output to query MongoDB
+    const mongoQuery = {
+      isApproved: true,
+      isPublished: true,
+      ...parsedFilters,
+    };
+
+    const events = await Event.find(mongoQuery).limit(20);
+
+    res.json({
+      success: true,
+      filters: parsedFilters,
+      data: events,
+    });
+  } catch (error) {
+    console.error("AI SEARCH ERROR:", error.message);
+
+    // 3️⃣ SAFE FALLBACK (CRITICAL)
+    const events = await Event.find({
+      isApproved: true,
+      isPublished: true,
+    }).limit(20);
+
+    res.json({
+      success: true,
+      fallback: true,
+      data: events,
+    });
+  }
+};
+
 module.exports = {
   getEvents,
   createEventHandler,
@@ -146,4 +193,5 @@ module.exports = {
   aiSearchEvents,
   incrementEventViewHandler,
   getPendingEventsHandler,
+  aiSearchEventsProxy,
 };
