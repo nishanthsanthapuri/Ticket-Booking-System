@@ -1,28 +1,13 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 
-// ✅ Allowed origins (local + production)
-const allowedOrigins = [
-  "http://localhost:5173",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+const app = express();
 
-// ✅ CORS CONFIG (FIXED)
+/* ✅ 1. CORS MUST BE FIRST */
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow REST tools like Postman (no origin)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("CORS blocked: Origin not allowed"), false);
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    origin: "*", // safe for now
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
       "Authorization",
@@ -34,24 +19,26 @@ app.use(
   })
 );
 
-// ⚠️ Razorpay webhook must be BEFORE json middleware
-app.use("/api/payments/webhook", express.raw({ type: "application/json" }));
+/* ✅ 2. Explicitly allow preflight */
+app.options("*", cors());
 
-// JSON body parsing
+/* ✅ 3. JSON parser */
 app.use(express.json());
 
-// Health check
+/* ✅ 4. Razorpay webhook ONLY */
+app.use("/api/payments/webhook", express.raw({ type: "application/json" }));
+
+/* ✅ Health */
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
 
-// ================= ROUTES =================
+/* ✅ Routes */
 app.use("/api/events", require("./modules/events/event.routes"));
 app.use("/api", require("./modules/tickets/ticket.routes"));
 app.use("/api", require("./modules/bookings/booking.routes"));
-app.use("/api", require("./routes/health.routes"));
 
-// Error handler
+/* ✅ Error handler LAST */
 const errorMiddleware = require("./middlewares/error.middleware");
 app.use(errorMiddleware);
 
