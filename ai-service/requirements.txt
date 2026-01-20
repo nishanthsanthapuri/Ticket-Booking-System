@@ -1,4 +1,17 @@
 fastapi
 uvicorn
 pydantic
+
+# ML / AI
 sentence-transformers
+torch
+numpy
+scikit-learn
+
+# Optional but recommended
+python-multipart
+
+# fastapi
+# uvicorn
+# pydantic
+# sentence-transformers
