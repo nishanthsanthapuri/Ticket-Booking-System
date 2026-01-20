@@ -1,0 +1,131 @@
+/* ===============================
+   LINKS
+================================ */
+a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================
+   BUTTONS (GLOBAL)
+================================ */
+button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.35);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===============================
+   INPUTS & FORMS
+================================ */
+input,
+select,
+textarea {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ===============================
+   HEADINGS & TEXT
+================================ */
+h1 {
+  font-size: 26px;
+  margin-bottom: 14px;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+/* ===============================
+   CARD / BOX (AUTO APPLIED)
+================================ */
+.card,
+div[style*="border"],
+div[style*="padding"] {
+  background: var(--surface);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+  animation: fadeUp 0.4s ease;
+}
+
+/* ===============================
+   PAGE LAYOUT (AUTO)
+================================ */
+body > div {
+  animation: fadeUp 0.4s ease;
+}
+
+/* ===============================
+   STATUS TEXT
+================================ */
+.success {
+  color: var(--success);
+}
+
+.error {
+  color: var(--danger);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+/* ===============================
+   ANIMATIONS
+================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

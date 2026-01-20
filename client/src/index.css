@@ -1,0 +1,52 @@
+@import "./styles/theme.css";
+@import "./styles/layout.css";
+@import "./styles/components.css";
+@import "./styles/animations.css";
+/* ===============================
+   GLOBAL RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+/* ===============================
+   BODY & BACKGROUND
+================================ */
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  color: #e5e7eb;
+}
+
+/* ===============================
+   THEME TOKENS (DESIGN SYSTEM)
+================================ */
+:root {
+  /* Brand colors */
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #22d3ee;
+
+  /* Status */
+  --success: #22c55e;
+  --warning: #facc15;
+  --danger: #ef4444;
+
+  /* Surfaces */
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.18);
+
+  /* Text */
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+
+  /* Shape & effects */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --blur: blur(14px);
+}
