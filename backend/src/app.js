@@ -4,9 +4,24 @@ const cors = require("cors");
 const app = express();
 
 /* ✅ 1. CORS MUST BE FIRST */
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ticket-booking-frontend-3poz.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "*", // safe for now
+    origin: function (origin, callback) {
+      // allow requests with no origin (mobile apps, curl, postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
@@ -20,7 +35,7 @@ app.use(
 );
 
 /* ✅ 2. Explicitly allow preflight */
-app.options("*", cors());
+// app.options("*", cors());
 
 /* ✅ 3. JSON parser */
 app.use(express.json());
