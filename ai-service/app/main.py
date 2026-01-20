@@ -1,6 +1,6 @@
+from fastapi import FastAPI
 import os
 import uvicorn
-from fastapi import FastAPI
 
 from app.api.search import router as search_router
 from app.api.forecast import router as forecast_router
@@ -21,9 +21,8 @@ def health():
     return {"status": "ai service up"}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
-
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run("app.main:app", host="0.0.0.0", port=port)
 
 # from fastapi import FastAPI
 # from app.api.search import router as search_router
